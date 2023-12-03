@@ -1,0 +1,12 @@
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\FW4.csproj.AssemblyReference.cache
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\FW4.GeneratedMSBuildEditorConfig.editorconfig
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\FW4.AssemblyInfoInputs.cache
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\FW4.AssemblyInfo.cs
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\FW4.csproj.CoreCompileInputs.cache
+F:\SkateModdingTeam\Fauxware4\FW4\bin\Debug\net7.0\FW4.deps.json
+F:\SkateModdingTeam\Fauxware4\FW4\bin\Debug\net7.0\FW4.dll
+F:\SkateModdingTeam\Fauxware4\FW4\bin\Debug\net7.0\FW4.pdb
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\FW4.dll
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\refint\FW4.dll
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\FW4.pdb
+F:\SkateModdingTeam\Fauxware4\FW4\obj\Debug\net7.0\ref\FW4.dll

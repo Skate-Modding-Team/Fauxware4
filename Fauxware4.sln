@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FW4", "FW4\FW4.csproj", "{658BC75C-241E-44F7-A2A1-A3C4DF09B924}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test-ArenaTool", "Test-ArenaTool\Test-ArenaTool.csproj", "{02D71AFE-4D28-4907-A841-97C04E16D85D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{658BC75C-241E-44F7-A2A1-A3C4DF09B924}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{658BC75C-241E-44F7-A2A1-A3C4DF09B924}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{658BC75C-241E-44F7-A2A1-A3C4DF09B924}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{658BC75C-241E-44F7-A2A1-A3C4DF09B924}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02D71AFE-4D28-4907-A841-97C04E16D85D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02D71AFE-4D28-4907-A841-97C04E16D85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02D71AFE-4D28-4907-A841-97C04E16D85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02D71AFE-4D28-4907-A841-97C04E16D85D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C313B0AD-C56D-4997-9C89-E3D3744A66D8}
+	EndGlobalSection
+EndGlobal
