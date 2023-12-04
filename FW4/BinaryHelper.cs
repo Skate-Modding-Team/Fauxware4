@@ -68,5 +68,15 @@ namespace FW4
                 return BinaryPrimitives.ReadSingleLittleEndian(stream);
             }
         }
+
+        public static byte[] UIntToBytes(uint val, bool BigEndian)
+        {
+          byte[] bytes = BitConverter.GetBytes(val);
+          if(BigEndian)
+          {
+            Array.Reverse(bytes);
+          }
+          return bytes;
+        }
     }
 }

@@ -1,6 +1,3 @@
-﻿using FW4.rw;
-using FW4.rw.core;
-using FW4.rw.core.arena;
 using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
@@ -8,6 +5,9 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using FW4.rw;
+using FW4.rw.core;
+using FW4.rw.core.arena;
 using static FW4.BinaryHelper;
 using static FW4.RWObjectSerialize;
 
@@ -270,10 +270,28 @@ namespace FW4
 
             return DeserializedArena;
         }
-
+      
+        /**
+        * <summary>Serializes an Arena object into an arena file.</summary>
+        */
         public static void SerializeArena(Arena arena, String FilePath)
         {
-            //implement me :)
+          Platform platform = (Platform)BitConverter.ToInt32(arena.ArenaFileHeaderMagicNumber.body);
+          bool Endianess = arena.ArenaFileHeader.isBigEndian;
+          ArenaStream = File.Create(ArenaFilePath);
+          BinaryReader ArenaWriter = new BinaryReader(ArenaStream);
+
+          ArenaWriter.Write(arena.ArenaFileHeaderMagicNumber.prefix);
+          ArenaWriter.Write(arena.ArenaFileHeaderMagicNumber.body);
+          ArenaWriter.Write(arena.ArenaFileHeaderMagicNumber.suffix);
+
+          ArenaWriter.WriteByte(arena.ArenaFileHeader.isBigEndian);
+          ArenaWriter.WriteByte(arena.ArenaFileHeader.pointerSizeInBits);
+          ArenaWriter.WriteByte(arena.ArenaFileHeader.pointerAlignment);
+          ArenaWriter.WriteByte(arena.ArenaFileHeader.unused);
+          ArenaWriter.Write(arena.ArenaFileHeader.majorVersion);
+          ArenaWriter.Write(arena.ArenaFileHeader.minorVersion);
+          ArenaWriter.Write(UIntToBytes(arena.ArenaFileHeader.buildNo, Endianess));
         }
     }
 }
