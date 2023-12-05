@@ -292,6 +292,16 @@ namespace FW4
           ArenaWriter.Write(arena.ArenaFileHeader.majorVersion);
           ArenaWriter.Write(arena.ArenaFileHeader.minorVersion);
           ArenaWriter.Write(UIntToBytes(arena.ArenaFileHeader.buildNo, Endianess));
+
+          ArenaWriter.Write(UIntToBytes(arena.id, Endianess));
+          ArenaWriter.Write(UIntToBytes(arena.numEntries, Endianess));
+          ArenaWriter.Write(UIntToBytes(arena.numUsed, Endianess));
+          ArenaWriter.Write(UIntToBytes(arena.alignment, Endianess));
+          ArenaWriter.Write(UIntToBytes(arena.virt, Endianess));
+          ArenaWriter.Write(UIntToBytes(arena.dictStart, Endianess));
+          ArenaWriter.Write(UIntToBytes(arena.sections, Endianess));
+          ArenaWriter.Write(UIntToBytes(arena.Base, Endianess));
+          
         }
     }
 }
