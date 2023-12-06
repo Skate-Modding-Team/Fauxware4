@@ -8,6 +8,16 @@ namespace FW4.rw.core
 {
     public enum RWObjectTypes
     {
+        //OBJECT NAME     //component:type
+        //-------------------------//
+        /*components:
+         *core = 1
+         *graphics = 2
+         *physics = 4
+         *animation = 7
+         *collision = 8
+         *pegasus = 0xEB
+         */
         RWOBJECTTYPE_NA = 0x00010000,
         RWOBJECTTYPE_ARENA = 0x00010001,
         RWOBJECTTYPE_RAW = 0x00010002,

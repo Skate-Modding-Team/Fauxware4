@@ -1,4 +1,4 @@
-﻿namespace FW4.pegasus
+namespace FW4.pegasus
 {
     /**
     *<summary>Gives the version information for pegasus.</summary>

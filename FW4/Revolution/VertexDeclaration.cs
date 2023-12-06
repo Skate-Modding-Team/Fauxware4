@@ -71,7 +71,7 @@ namespace FW4.Revolution
       public componentSize compSize,
       public byte fraction,
       public byte unknown,
-      public byte uknown2,
+      public byte unknown2,
       public uint offset
     }
     

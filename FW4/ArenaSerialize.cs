@@ -18,9 +18,8 @@ namespace FW4
      */
     public static class ArenaSerialize
     {
-        //Private Helpers
 
-        private enum Platform
+        public enum Platform
         {
             PS3 = 3371888,
             XB2 = 3302008,
