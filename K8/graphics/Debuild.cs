@@ -25,10 +25,7 @@ namespace K8.graphics
      */
     public static void ExportArenaGraphics(Arena arena, string path)
     {
-      foreach(TableOfContents toc in Arena.ArenaEntries)
-      {
-        
-      }
+      
     }
   }
 }

@@ -37,8 +37,16 @@ namespace K8
       
       for(int i = 0; i < arena.ArenaDict.length(); i++)
       {
-        switch()
-        ConvertRWObject(arena.ArenaEntries.get(i), arena.ArenaDict.get(i).type, versData, srcversData);
+        switch(arena.ArenaDict.get(i).type)
+        {
+          case RWObjectTypes.RWGOBJECTTYPE_VERTEXDESCRIPTOR:
+            if(platform == Platform.XB2)
+            {
+              FW4.xenon.VertexDeclaration vdecl = new FW4.xenon.VertexDeclaration();
+              
+            }
+            break;
+        }
       }
 
       arena.DictEntries = dictEntries;
