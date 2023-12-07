@@ -8,8 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="pegasus\" />
-    <Folder Include="rw\math\vpu\" />
+    <Compile Remove="pegasus\**" />
+    <Compile Remove="rw\**" />
+    <EmbeddedResource Remove="pegasus\**" />
+    <EmbeddedResource Remove="rw\**" />
+    <None Remove="pegasus\**" />
+    <None Remove="rw\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FW4\FW4.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FW4.rw;
 using FW4.rw.core;
 using FW4.rw.core.arena;
+using FW4.pegasus;
 using static FW4.BinaryHelper;
 using static FW4.RWObjectSerialize;
 
@@ -260,6 +261,12 @@ namespace FW4
                     case RWObjectTypes.RWOBJECTTYPE_VERSIONDATA:
                         DeserializedArena.ArenaEntries.Add(DeserializeVersionData(ArenaReader, BE));
                         break;
+                    case RWObjectTypes.RWOBJECTTYPE_TABLEOFCONTENTS:
+                        DeserializedArena.ArenaEntries.Add(DeserializeTOC(ArenaReader, BE));
+                        break;
+                    case RWObjectTypes.RWGOBJECTTYPE_TEXTURE:
+                        DeserializedArena.ArenaEntries.Add(DeserializeTexture(ArenaReader, BE));
+                        break;
                     case RWObjectTypes.RWOBJECTTYPE_BASERESOURCE:
                         ArenaReader.BaseStream.Seek(DeserializedArena.m_resourceDescriptor.m_baseResourceDescriptors[0].m_size + entry.ptr, SeekOrigin.Begin);
                         DeserializedArena.ArenaEntries.Add(ArenaReader.ReadBytes((int)entry.size));
@@ -275,32 +282,213 @@ namespace FW4
         */
         public static void SerializeArena(Arena arena, String FilePath)
         {
-          Platform platform = (Platform)BitConverter.ToInt32(arena.ArenaFileHeaderMagicNumber.body);
-          bool Endianess = arena.ArenaFileHeader.isBigEndian;
-          ArenaStream = File.Create(ArenaFilePath);
-          BinaryReader ArenaWriter = new BinaryReader(ArenaStream);
+            //---------------------//
+            //  Serialize Header   //
+            //---------------------//
+            Platform platform = (Platform)BitConverter.ToInt32(arena.fileHeader.magicNumber.body);
+            bool Endianess = arena.fileHeader.isBigEndian;
+            FileStream ArenaStream = File.Create(FilePath);
+            BinaryWriter ArenaWriter = new BinaryWriter(ArenaStream);
 
-          ArenaWriter.Write(arena.ArenaFileHeaderMagicNumber.prefix);
-          ArenaWriter.Write(arena.ArenaFileHeaderMagicNumber.body);
-          ArenaWriter.Write(arena.ArenaFileHeaderMagicNumber.suffix);
+            ArenaWriter.Write(arena.fileHeader.magicNumber.prefix);
+            ArenaWriter.Write(arena.fileHeader.magicNumber.body);
+            ArenaWriter.Write(arena.fileHeader.magicNumber.suffix);
+         
+            ArenaWriter.Write(arena.fileHeader.isBigEndian);
+            ArenaWriter.Write(arena.fileHeader.pointerSizeInBits);
+            ArenaWriter.Write(arena.fileHeader.pointerAlignment);
+            ArenaWriter.Write(arena.fileHeader.unused);
+            ArenaWriter.Write(arena.fileHeader.majorVersion);
+            ArenaWriter.Write(arena.fileHeader.minorVersion);
+            ArenaWriter.Write(UIntToBytes(arena.fileHeader.buildNo, Endianess));
 
-          ArenaWriter.WriteByte(arena.ArenaFileHeader.isBigEndian);
-          ArenaWriter.WriteByte(arena.ArenaFileHeader.pointerSizeInBits);
-          ArenaWriter.WriteByte(arena.ArenaFileHeader.pointerAlignment);
-          ArenaWriter.WriteByte(arena.ArenaFileHeader.unused);
-          ArenaWriter.Write(arena.ArenaFileHeader.majorVersion);
-          ArenaWriter.Write(arena.ArenaFileHeader.minorVersion);
-          ArenaWriter.Write(UIntToBytes(arena.ArenaFileHeader.buildNo, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.id, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.numEntries, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.numUsed, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.alignment, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.virt, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.dictStart, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.sections, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Base, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.m_unfixContext, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.m_fixContext, Endianess));
 
-          ArenaWriter.Write(UIntToBytes(arena.id, Endianess));
-          ArenaWriter.Write(UIntToBytes(arena.numEntries, Endianess));
-          ArenaWriter.Write(UIntToBytes(arena.numUsed, Endianess));
-          ArenaWriter.Write(UIntToBytes(arena.alignment, Endianess));
-          ArenaWriter.Write(UIntToBytes(arena.virt, Endianess));
-          ArenaWriter.Write(UIntToBytes(arena.dictStart, Endianess));
-          ArenaWriter.Write(UIntToBytes(arena.sections, Endianess));
-          ArenaWriter.Write(UIntToBytes(arena.Base, Endianess));
-          
+            foreach (BaseResourceDescriptor brd in arena.m_resourceDescriptor.m_baseResourceDescriptors)
+            {
+                ArenaWriter.Write(UIntToBytes(brd.m_size, Endianess));
+                ArenaWriter.Write(UIntToBytes(brd.m_alignment, Endianess));
+            }
+
+            foreach (BaseResourceDescriptor brd in arena.m_resourcesUsed.m_baseResourceDescriptors)
+            {
+                ArenaWriter.Write(UIntToBytes(brd.m_size, Endianess));
+                ArenaWriter.Write(UIntToBytes(brd.m_alignment, Endianess));
+            }
+
+            if(platform == Platform.XB2 || platform == Platform.PS3)
+            {
+                foreach (uint offset in arena.m_resource.m_baseResources)
+                {
+                    ArenaWriter.Write(UIntToBytes(offset, Endianess));
+                }
+            }
+
+            if(platform == Platform.XB2 || platform == Platform.WII)
+            {
+                ArenaWriter.Write(UIntToBytes(arena.m_arenaGroup, Endianess));
+            }
+
+            //---------------------//
+            // Serialize Sections  //
+            //---------------------//
+
+            //Manifest
+            ArenaWriter.Write(IntToBytes((int)arena.Manifest.SectionType ,Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Manifest.NumEntries, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Manifest.dictOffset, Endianess));
+            for (int i = 0; i < arena.Manifest.dictOffset-(ArenaWriter.BaseStream.Position - arena.sections); i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+            foreach(uint entry in arena.Manifest.dict)
+            {
+                ArenaWriter.Write(UIntToBytes(entry, Endianess));
+            }
+
+            for (int i = 0; i < arena.Manifest.dict[0] - (ArenaWriter.BaseStream.Position - arena.sections); i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+
+            //Types
+            ArenaWriter.Write(IntToBytes((int)arena.Types.SectionType, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Types.NumEntries, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Types.dictOffset, Endianess));
+            for (int i = 0; i < arena.Types.dictOffset - (ArenaWriter.BaseStream.Position - arena.sections); i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+            foreach (RWObjectTypes type in arena.Types.dict)
+            {
+                ArenaWriter.Write(IntToBytes((int)type, Endianess));
+            }
+
+            for (int i = 0; i < arena.Manifest.dict[1] - (ArenaWriter.BaseStream.Position - arena.sections); i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+
+            //External Arenas
+            ArenaWriter.Write(IntToBytes((int)arena.ExternalArenas.SectionType, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.ExternalArenas.NumEntries, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.ExternalArenas.dictOffset, Endianess));
+            for (int i = 0; i < arena.ExternalArenas.dictOffset - (ArenaWriter.BaseStream.Position - arena.sections); i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+            foreach (uint data in arena.ExternalArenas.dict)
+            {
+                ArenaWriter.Write(UIntToBytes(data, Endianess));
+            }
+
+            for (int i = 0; i < arena.Manifest.dict[2] - (ArenaWriter.BaseStream.Position - arena.sections); i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+
+            //Subreferences
+            ArenaWriter.Write(IntToBytes((int)arena.Subreferences.SectionType, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Subreferences.NumEntries, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Subreferences.m_dictAfterRefix, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Subreferences.m_recordsAfterRefix, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Subreferences.dict, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Subreferences.records, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Subreferences.numUsed, Endianess));
+
+            for (int i = 0; i < arena.Manifest.dict[3] - (ArenaWriter.BaseStream.Position - arena.sections); i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+
+            ArenaWriter.Write(IntToBytes((int)arena.Atoms.SectionType, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Atoms.NumEntries, Endianess));
+            ArenaWriter.Write(UIntToBytes(arena.Atoms.atomTable, Endianess));
+
+            if (ArenaWriter.BaseStream.Position % 16 != 0)
+            {
+                for (int i = 0; i < 16 - ArenaWriter.BaseStream.Position % 16; i++)
+                {
+                    ArenaWriter.Write((byte)0);
+                }
+            }
+
+            //---------------------//
+            //  Serialize Entries  //
+            //---------------------//
+
+            for(int i = 0; i < arena.ArenaEntries.Count; i++)
+            {
+                if (arena.DictEntries[i].type != RWObjectTypes.RWOBJECTTYPE_BASERESOURCE)
+                    SerializePegasusObject(ArenaWriter, Endianess, (PegasusObject)arena.ArenaEntries[i]);
+
+                if (i < arena.ArenaEntries.Count - 1)
+                {
+                    uint nextOff = 0;
+                    for (int j = i + 1; j < arena.ArenaEntries.Count; i++)
+                    {
+                        if (arena.DictEntries[i].type != RWObjectTypes.RWOBJECTTYPE_BASERESOURCE)
+                            nextOff = arena.DictEntries[i].ptr;
+                    }
+                }
+            }
+
+            //---------------------//
+            //  Serialize Dict.    //
+            //---------------------//
+            for (int i = 0; i < arena.dictStart - ArenaWriter.BaseStream.Position; i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+
+            foreach (Arena.ArenaDictEntry entry in arena.DictEntries)
+            {
+                ArenaWriter.Write(UIntToBytes(entry.ptr, Endianess));
+                ArenaWriter.Write(UIntToBytes(entry.reloc, Endianess));
+                ArenaWriter.Write(UIntToBytes(entry.size, Endianess));
+                ArenaWriter.Write(UIntToBytes(entry.align, Endianess));
+                ArenaWriter.Write(UIntToBytes(entry.typeIndex, Endianess));
+                ArenaWriter.Write(IntToBytes((int)entry.type, Endianess));
+            }
+
+            //---------------------//
+            //  Serialize Subrefs  //
+            //---------------------//
+            for (int i = 0; i < arena.Subreferences.records - ArenaWriter.BaseStream.Position; i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+
+            foreach (ArenaSectionSubreferences.Record rec in arena.Subreferences.RecordEntries)
+            {
+                ArenaWriter.Write(UIntToBytes(rec.objectID, Endianess));
+                ArenaWriter.Write(UIntToBytes(rec.offset, Endianess));
+            }
+
+            //---------------------//
+            //  Serialize Resrcs   //
+            //---------------------//
+            for (int i = 0; i < arena.m_resourceDescriptor.m_baseResourceDescriptors[0].m_size - ArenaWriter.BaseStream.Position; i++)
+            {
+                ArenaWriter.Write((byte)0);
+            }
+
+            if (arena.m_resourceDescriptor.m_baseResourceDescriptors[1].m_size > 0)
+            {
+                foreach (byte[] resource in arena.ArenaEntries)
+                {
+                    ArenaWriter.Write(resource);
+                }
+            }
         }
     }
 }

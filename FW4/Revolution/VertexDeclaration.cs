@@ -4,7 +4,7 @@ namespace FW4.Revolution
 {
   public class VertexDeclaration
   {
-    public enum attribute
+    public enum Attribute
     {
       GX_VA_PTNMTXIDX = 0,
       GX_VA_TEX0MTXIDX = 1,
@@ -64,19 +64,19 @@ namespace FW4.Revolution
       GX_U8 = 0
     }
     
-    public Struct declaration
+    public struct Declaration
     {
-      public attribute attr,
-      public componentType compType,
-      public componentSize compSize,
-      public byte fraction,
-      public byte unknown,
-      public byte unknown2,
-      public uint offset
+        public Attribute att;
+        public componentType compType;
+        public componentSize compSize;
+        public byte fraction;
+        public byte unknown;
+        public byte unknown2;
+        public uint offset;
     }
     
-    public uint8 numVBuffs;
-    public uint8 numDecls;
-    public declaration[] decls;
+    public byte numVBuffs;
+    public byte numDecls;
+    public Declaration[] decls;
   }
 }

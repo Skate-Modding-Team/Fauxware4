@@ -1,7 +1,9 @@
 using FW4;
 using FW4.pegasus;
+using FW4.rw;
 using FW4.rw.core;
 using FW4.rw.core.arena;
+using System.Collections;
 using static FW4.ArenaSerialize;
 
 namespace K8
@@ -27,22 +29,27 @@ namespace K8
         }
       }
       //change platform bytes in header
-      arena.fileHeader.magicNumber.body = BitConverter.GetBytes(platform);
+      Arena.ArenaFileHeader newHead = arena.fileHeader;
+      Arena.ArenaFileHeaderMagicNumber newMagic = arena.fileHeader.magicNumber;
+            newMagic.body = BitConverter.GetBytes((int)Platform.XB2);
+            newHead.magicNumber = newMagic;
+            arena.fileHeader = newHead;
       //change the version data object
-      VersionData srcversData = arena.ArenaEntries[0];
+      VersionData srcversData = (VersionData)arena.ArenaEntries[0];
       arena.ArenaEntries[0] = versData;
       //remove non-Presentation objects from arena and convert each pres object
       ArrayList entries = new ArrayList();
       ArrayList dictEntries = new ArrayList();
       
-      for(int i = 0; i < arena.ArenaDict.length(); i++)
+      for(int i = 0; i < arena.DictEntries.Count; i++)
       {
-        switch(arena.ArenaDict.get(i).type)
+        Arena.ArenaDictEntry entry = (Arena.ArenaDictEntry)arena.DictEntries[i];
+        switch (entry.type)
         {
           case RWObjectTypes.RWGOBJECTTYPE_VERTEXDESCRIPTOR:
             if(platform == Platform.XB2)
             {
-              FW4.xenon.VertexDeclaration vdecl = new FW4.xenon.VertexDeclaration();
+              FW4.Xenon.VertexDeclaration vdecl = new FW4.Xenon.VertexDeclaration();
               
             }
             break;

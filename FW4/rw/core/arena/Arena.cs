@@ -66,7 +66,7 @@ namespace FW4.rw.core.arena
         public ArenaSectionAtoms Atoms { get; set; }
 
         //Entries
-        public ArrayList DictEntries = new ArrayList();
+        public List<ArenaDictEntry> DictEntries = new List<ArenaDictEntry>();
 
         public ArrayList ArenaEntries = new ArrayList();
 

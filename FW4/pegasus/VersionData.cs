@@ -1,10 +1,15 @@
+using FW4.rw.core;
+
 namespace FW4.pegasus
 {
     /**
     *<summary>Gives the version information for pegasus.</summary>
     */
-    public class VersionData
+    public class VersionData : PegasusObject
     {
+        RWObjectTypes type = rw.core.RWObjectTypes.RWOBJECTTYPE_VERSIONDATA;
+        uint size = 8;
+            
         public uint version { get; set; }
         public uint revision { get; set; }
 

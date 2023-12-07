@@ -10,6 +10,7 @@ namespace K8.graphics
    */
   public static class TexDebuild
   {
+        /*
     public static byte[] UnswizzleWiiDXT(byte[] imageData)
     {
 
@@ -19,7 +20,7 @@ namespace K8.graphics
     {
       
     }
-    
+    */
     /**
      * <summary>Exports all the models, textures, and other render data in an arena to the specified path in dds and obj format.</summary>
      */

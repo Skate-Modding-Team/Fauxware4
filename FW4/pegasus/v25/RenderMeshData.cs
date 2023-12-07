@@ -10,7 +10,7 @@ namespace FW4.pegasus.v25
     uint IndexBufferID;
     uint VertexBufferID;
     uint NumVerts;
-    pegasus::tRMeshData::<unnamed_tag> m_DrawParams;
+    //pegasus::tRMeshData::<unnamed_tag> m_DrawParams;
     uint RemapTable;
     bool IsIndexed;
     uint NumBoneMats;

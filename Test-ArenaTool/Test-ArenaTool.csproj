@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FW4\FW4.csproj" />
+    <ProjectReference Include="..\K8\K8.csproj" />
   </ItemGroup>
 
 </Project>

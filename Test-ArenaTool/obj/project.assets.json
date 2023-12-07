@@ -11,6 +11,19 @@
         "runtime": {
           "bin/placeholder/FW4.dll": {}
         }
+      },
+      "K8/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "FW4": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/K8.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/K8.dll": {}
+        }
       }
     }
   },
@@ -19,11 +32,17 @@
       "type": "project",
       "path": "../FW4/FW4.csproj",
       "msbuildProject": "../FW4/FW4.csproj"
+    },
+    "K8/1.0.0": {
+      "type": "project",
+      "path": "../K8/K8.csproj",
+      "msbuildProject": "../K8/K8.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0-windows7.0": [
-      "FW4 >= 1.0.0"
+      "FW4 >= 1.0.0",
+      "K8 >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -62,6 +81,9 @@
           "projectReferences": {
             "F:\\SkateModdingTeam\\Fauxware4\\FW4\\FW4.csproj": {
               "projectPath": "F:\\SkateModdingTeam\\Fauxware4\\FW4\\FW4.csproj"
+            },
+            "F:\\SkateModdingTeam\\Fauxware4\\K8\\K8.csproj": {
+              "projectPath": "F:\\SkateModdingTeam\\Fauxware4\\K8\\K8.csproj"
             }
           }
         }

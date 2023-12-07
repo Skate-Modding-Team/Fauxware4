@@ -2,7 +2,7 @@ using System;
 
 namespace FW4.Xenon
 {
-    public class D3DResource
+    public class D3DResource : FW4.pegasus.PegasusObject
     {
       public uint Common;
       public uint ReferenceCount;

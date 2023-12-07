@@ -30,16 +30,15 @@
         {
             this.button1 = new System.Windows.Forms.Button();
             this.openArenaDialog = new System.Windows.Forms.OpenFileDialog();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(12, 12);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(174, 23);
             this.button1.TabIndex = 0;
-            this.button1.Text = "OpenArena";
+            this.button1.Text = "Convert Arena :)";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -47,20 +46,11 @@
             // 
             this.openArenaDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.openArenaDialog_FileOk);
             // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(93, 12);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(1048, 551);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1153, 575);
-            this.Controls.Add(this.richTextBox1);
+            this.ClientSize = new System.Drawing.Size(200, 43);
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -72,6 +62,5 @@
 
         private Button button1;
         private OpenFileDialog openArenaDialog;
-        private RichTextBox richTextBox1;
     }
 }

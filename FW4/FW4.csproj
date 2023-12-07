@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="pegasus\" />
+    <Folder Include="pegasus\v24\" />
+    <Folder Include="pegasus\v25\" />
     <Folder Include="rw\math\vpu\" />
   </ItemGroup>
 

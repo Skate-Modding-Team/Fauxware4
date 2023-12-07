@@ -1,0 +1,5 @@
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.csproj.AssemblyReference.cache
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.GeneratedMSBuildEditorConfig.editorconfig
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.AssemblyInfoInputs.cache
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.AssemblyInfo.cs
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.csproj.CoreCompileInputs.cache

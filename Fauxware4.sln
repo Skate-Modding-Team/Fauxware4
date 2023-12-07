@@ -5,7 +5,9 @@ VisualStudioVersion = 17.4.33103.184
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FW4", "FW4\FW4.csproj", "{658BC75C-241E-44F7-A2A1-A3C4DF09B924}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test-ArenaTool", "Test-ArenaTool\Test-ArenaTool.csproj", "{02D71AFE-4D28-4907-A841-97C04E16D85D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test-ArenaTool", "Test-ArenaTool\Test-ArenaTool.csproj", "{02D71AFE-4D28-4907-A841-97C04E16D85D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "K8", "K8\K8.csproj", "{BA4D02F4-CEC3-45CE-9333-6B83832171BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{02D71AFE-4D28-4907-A841-97C04E16D85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02D71AFE-4D28-4907-A841-97C04E16D85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02D71AFE-4D28-4907-A841-97C04E16D85D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA4D02F4-CEC3-45CE-9333-6B83832171BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA4D02F4-CEC3-45CE-9333-6B83832171BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA4D02F4-CEC3-45CE-9333-6B83832171BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA4D02F4-CEC3-45CE-9333-6B83832171BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

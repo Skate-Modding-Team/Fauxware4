@@ -78,5 +78,15 @@ namespace FW4
           }
           return bytes;
         }
+
+        public static byte[] IntToBytes(int val, bool BigEndian)
+        {
+            byte[] bytes = BitConverter.GetBytes(val);
+            if (BigEndian)
+            {
+                Array.Reverse(bytes);
+            }
+            return bytes;
+        }
     }
 }

@@ -1,10 +1,10 @@
-using System.numerics;
+using System.Numerics;
 
 namespace FW4.pegasus
 {
   public class AABB
   {
-    vector4 m_Min;
-    vector4 m_Max;
+    Vector4 m_Min;
+    Vector4 m_Max;
   }
 }

@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace K8.serialization
 {
   public class ObjObject
