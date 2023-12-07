@@ -5,7 +5,7 @@ namespace FW4.pegasus
     /**
     *<summary>Gives the version information for pegasus.</summary>
     */
-    public class VersionData : PegasusObject
+    public class VersionData : RWObject
     {
         RWObjectTypes type = rw.core.RWObjectTypes.RWOBJECTTYPE_VERSIONDATA;
         uint size = 8;
@@ -29,5 +29,29 @@ namespace FW4.pegasus
          *  Version = 25
          *  Revision = 13
          */
+
+        public override byte[] Serialize(bool BigEndian)
+        {
+          byte[] data = new byte[8];
+          byte[] versBytes = BitConverter.GetBytes(version);
+          byte[] revBytes = BitConverter.GetBytes(revision);
+          if (BigEndian)
+          {
+            versBytes = Array.Reverse(versBytes);
+            revBytes = Array.Reverse(revBytes);
+          }
+          Array.Copy(versBytes, data, sizeof(uint));
+          Array.Copy(revBytes, 0, data, sizeof(uint), sizeof(uint));
+        }
+
+        public override void Deserialize(byte[] data, bool BigEndian)
+        {
+          versBytes = new byte[sizeof(uint)];
+          Array.Copy(data, 0, versBytes, 0, sizeof(uint));
+          version = ReadUInt32(versBytes, BigEndian);
+          revBytes = new byte[sizeof(uint)];
+          Array.Copy(data, 4, revBytes, 0, sizeof(uint));
+          revision = ReadUInt32(revBytes, BigEndian);
+        }
     }
 }

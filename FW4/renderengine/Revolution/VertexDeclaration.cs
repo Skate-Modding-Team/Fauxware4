@@ -1,6 +1,6 @@
 using System;
 
-namespace FW4.Revolution
+namespace FW4.renderengine.Revolution
 {
   public class VertexDeclaration
   {

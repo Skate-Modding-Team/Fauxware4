@@ -259,13 +259,15 @@ namespace FW4
                 switch(entry.type) 
                 {
                     case RWObjectTypes.RWOBJECTTYPE_VERSIONDATA:
-                        DeserializedArena.ArenaEntries.Add(DeserializeVersionData(ArenaReader, BE));
+                        VersionData vdata = new VersionData();
+                        vdata.Deserialize(ArenaReader.Read(8), BE);
                         break;
                     case RWObjectTypes.RWOBJECTTYPE_TABLEOFCONTENTS:
                         DeserializedArena.ArenaEntries.Add(DeserializeTOC(ArenaReader, BE));
                         break;
                     case RWObjectTypes.RWGOBJECTTYPE_TEXTURE:
-                        DeserializedArena.ArenaEntries.Add(DeserializeTexture(ArenaReader, BE));
+                        if(platform == Platform.XB2)
+                          DeserializedArena.ArenaEntries.Add(DeserializeD3DBase Texture(ArenaReader, BE, platform));
                         break;
                     case RWObjectTypes.RWOBJECTTYPE_BASERESOURCE:
                         ArenaReader.BaseStream.Seek(DeserializedArena.m_resourceDescriptor.m_baseResourceDescriptors[0].m_size + entry.ptr, SeekOrigin.Begin);
@@ -429,8 +431,12 @@ namespace FW4
             for(int i = 0; i < arena.ArenaEntries.Count; i++)
             {
                 if (arena.DictEntries[i].type != RWObjectTypes.RWOBJECTTYPE_BASERESOURCE)
-                    SerializePegasusObject(ArenaWriter, Endianess, (PegasusObject)arena.ArenaEntries[i]);
-
+                {  
+                  switch(arena.DictEntries[i].type)
+                  {
+                    
+                  }
+                }
                 if (i < arena.ArenaEntries.Count - 1)
                 {
                     uint nextOff = 0;

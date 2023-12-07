@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FW4
+namespace FW4.Serialization
 {
     public static class BinaryHelper
     {
@@ -69,6 +69,18 @@ namespace FW4
             }
         }
 
+        public static Int32 ReadInt64(byte[] stream, bool BigEndian)
+        {
+          if (BigEndian)
+          {
+              return BinaryPrimitives.ReadInt64BigEndian(stream);
+          }
+          else
+          {
+              return BinaryPrimitives.ReadInt64LittleEndian(stream);
+          }
+        }
+      
         public static byte[] UIntToBytes(uint val, bool BigEndian)
         {
           byte[] bytes = BitConverter.GetBytes(val);

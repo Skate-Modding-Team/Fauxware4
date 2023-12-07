@@ -1,6 +1,6 @@
 ﻿
 
-namespace FW4.Xenon
+namespace FW4.renderengine.Xenon
 {
     public class D3DBaseTexture : D3DResource
     {
