@@ -1,7 +1,7 @@
 using System;
 using FW4;
-using FW4.rw.core.arena;
-using FW4.pegasus;
+using FW4.RW.Core.Arena;
+using FW4.Pegasus;
 
 namespace K8.graphics
 {
@@ -22,9 +22,9 @@ namespace K8.graphics
     }
     */
     /**
-     * <summary>Exports all the models, textures, and other render data in an arena to the specified path in dds and obj format.</summary>
+     * <summary>Exports all the models, textures, and other render data in an Arena to the specified path in dds and obj format.</summary>
      */
-    public static void ExportArenaGraphics(Arena arena, string path)
+    public static void ExportArenaGraphics(Arena Arena, string path)
     {
       
     }

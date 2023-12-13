@@ -1,10 +1,10 @@
 ﻿
 
-namespace FW4.renderengine.Xenon
+namespace FW4.RenderEngine.Xenon
 {
     public class D3DBaseTexture : D3DResource
     {
-        FW4.rw.core.RWObjectTypes type = rw.core.RWObjectTypes.RWGOBJECTTYPE_TEXTURE;
+        FW4.RW.Core.ERWObjectTypes type = RW.Core.ERWObjectTypes.RWGOBJECTTYPE_TEXTURE;
         uint size = 0x34;
 
         int MipFlush;

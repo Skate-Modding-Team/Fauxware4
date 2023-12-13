@@ -1,23 +1,28 @@
-﻿using FW4.rw.core;
+﻿using FW4.RW.Core;
+using System.Collections;
+using System.IO;
+using System.Xml.Linq;
+using static FW4.BinaryHelper;
 
-namespace FW4.pegasus
+namespace FW4.Pegasus
 {
-    public class TableOfContents : PegasusObject
+
+    public class TableOfContents : IRWObject
     {
-        RWObjectTypes type = RWObjectTypes.RWOBJECTTYPE_TABLEOFCONTENTS;
+        ERWObjectTypes type = ERWObjectTypes.RWOBJECTTYPE_TABLEOFCONTENTS;
 
         public struct TOCEntry
         {
             public uint m_Name;
             public int unknown;
             public long m_uiGuid;
-            public RWObjectTypes m_Type;
+            public ERWObjectTypes m_Type;
             public uint m_pObject;
         }
 
         public struct TypeMap
         {
-            public RWObjectTypes Type;
+            public ERWObjectTypes Type;
             public uint Index;
         }
 
@@ -29,5 +34,38 @@ namespace FW4.pegasus
         public uint m_pNames;
         public uint m_uiTypeCount;
         public uint m_pTypeMap;
+
+        public byte[] Serialize(bool BigEndian)
+        {
+            using (MemoryStream m = new MemoryStream())
+            {
+                using (BinaryWriter stream = new BinaryWriter(m))
+                {
+                    stream.Write(UIntToBytes(m_uiItemsCount, BigEndian));
+                    stream.Write(UIntToBytes(m_pArray, BigEndian));
+                    stream.Write(UIntToBytes(m_pNames, BigEndian));
+                    stream.Write(UIntToBytes(m_uiTypeCount, BigEndian));
+                    stream.Write(UIntToBytes(m_pTypeMap, BigEndian));
+                    for (int i = 0; i < m_pArray - stream.BaseStream.Position; i++)
+                        stream.Write((byte)0x00);
+                    foreach (TOCEntry entry in TableEntries)
+                    {
+                        stream.Write(UIntToBytes(entry.m_Name, BigEndian));
+                        stream.Write(IntToBytes(entry.unknown, BigEndian));
+                        stream.Write(Int64ToBytes(entry.m_uiGuid, BigEndian));
+                        stream.Write((int)entry.m_Type);
+                        stream.Write(UIntToBytes(entry.m_pObject, BigEndian));
+                    }
+                    for (int i = 0; i < m_pTypeMap - stream.BaseStream.Position; i++)
+                        stream.Write((byte)0x00);
+                    foreach (TypeMap type in TypeMapEntries)
+                    {
+                        stream.Write((int)type.Type);
+                        stream.Write(UIntToBytes(type.Index, BigEndian));
+                    }
+                }
+                return m.ToArray();
+            }
+        }
     }
 }

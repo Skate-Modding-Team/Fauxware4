@@ -1,6 +1,6 @@
 using System;
 
-namespace FW4.renderengine.Revolution
+namespace FW4.RenderEngine.Revolution
 {
   public class IndexBuffer
   {

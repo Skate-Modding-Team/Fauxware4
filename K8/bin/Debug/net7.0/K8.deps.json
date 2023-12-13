@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v7.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v7.0": {
+      "K8/1.0.0": {
+        "dependencies": {
+          "FW4": "1.0.0"
+        },
+        "runtime": {
+          "K8.dll": {}
+        }
+      },
+      "FW4/1.0.0": {
+        "runtime": {
+          "FW4.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "K8/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FW4/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

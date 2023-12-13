@@ -1,15 +1,14 @@
-using FW4.rw.core;
+using FW4.RW.Core;
+using FW4.Serialization;
+using static FW4.BinaryHelper;
 
-namespace FW4.pegasus
+namespace FW4.Pegasus
 {
     /**
-    *<summary>Gives the version information for pegasus.</summary>
+    *<summary>Gives the version information for Pegasus.</summary>
     */
-    public class VersionData : RWObject
-    {
-        RWObjectTypes type = rw.core.RWObjectTypes.RWOBJECTTYPE_VERSIONDATA;
-        uint size = 8;
-            
+    public class VersionData : IRWObject
+    {  
         public uint version { get; set; }
         public uint revision { get; set; }
 
@@ -29,29 +28,33 @@ namespace FW4.pegasus
          *  Version = 25
          *  Revision = 13
          */
-
-        public override byte[] Serialize(bool BigEndian)
+        
+        public byte[] Serialize(bool BigEndian, Pegasus.VersionData vdata)
         {
-          byte[] data = new byte[8];
-          byte[] versBytes = BitConverter.GetBytes(version);
-          byte[] revBytes = BitConverter.GetBytes(revision);
-          if (BigEndian)
-          {
-            versBytes = Array.Reverse(versBytes);
-            revBytes = Array.Reverse(revBytes);
-          }
-          Array.Copy(versBytes, data, sizeof(uint));
-          Array.Copy(revBytes, 0, data, sizeof(uint), sizeof(uint));
-        }
+            var ms = new MemoryStream();
+            byte[] versBytes = BitConverter.GetBytes(version);
+            byte[] revBytes = BitConverter.GetBytes(revision);
+            if (BigEndian)
+            {
+                Array.Reverse(versBytes);
+                Array.Reverse(revBytes);
+            }
 
-        public override void Deserialize(byte[] data, bool BigEndian)
-        {
-          versBytes = new byte[sizeof(uint)];
-          Array.Copy(data, 0, versBytes, 0, sizeof(uint));
-          version = ReadUInt32(versBytes, BigEndian);
-          revBytes = new byte[sizeof(uint)];
-          Array.Copy(data, 4, revBytes, 0, sizeof(uint));
-          revision = ReadUInt32(revBytes, BigEndian);
+            ms.Write(versBytes);
+            ms.Write(revBytes);
+
+            return ms.ToArray();
         }
+        
+        public void Deserialize(byte[] bytes, bool BigEndian, Pegasus.VersionData vdata)
+        {
+            var ms = new MemoryStream(bytes);
+            using(var reader = new BinaryReader(ms))
+            {
+                version = ReadUInt32(reader.ReadBytes(4), BigEndian);
+                revision = ReadUInt32(reader.ReadBytes(4), BigEndian);
+            }
+        }
+        
     }
 }

@@ -1,6 +1,6 @@
-using FW4.pegasus;
+using FW4.Pegasus;
 
-namespace FW4.pegasus.v25
+namespace FW4.Pegasus.v25
 {
   public class RenderMeshData
   {
@@ -10,7 +10,7 @@ namespace FW4.pegasus.v25
     uint IndexBufferID;
     uint VertexBufferID;
     uint NumVerts;
-    //pegasus::tRMeshData::<unnamed_tag> m_DrawParams;
+    //Pegasus::tRMeshData::<unnamed_tag> m_DrawParams;
     uint RemapTable;
     bool IsIndexed;
     uint NumBoneMats;

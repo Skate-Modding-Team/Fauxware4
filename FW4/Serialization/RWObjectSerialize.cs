@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FW4.pegasus;
-using FW4.rw.core;
-using FW4.Xenon;
+using FW4.Pegasus;
+using FW4.RW.Core;
+using FW4.RenderEngine.Xenon;
 using static FW4.BinaryHelper;
 
 namespace FW4
@@ -39,9 +39,9 @@ namespace FW4
                 TableOfContents.TOCEntry entry = new TableOfContents.TOCEntry()
                 {
                     m_Name = ReadUInt32(stream.ReadBytes(4), endianess),
-                    unknown = ReadUInt32(stream.ReadBytes(4), endianess),
+                    unknown = ReadInt32(stream.ReadBytes(4), endianess),
                     m_uiGuid = ReadInt64(stream.ReadBytes(8), endianess),
-                    m_Type = (RWObjectType)ReadInt32(stream.ReadBytes(4), false),
+                    m_Type = (ERWObjectTypes)ReadInt32(stream.ReadBytes(4), false),
                     m_pObject = ReadUInt32(stream.ReadBytes(4), endianess)
                 };
                 TOC.TableEntries.Add(entry);
@@ -52,7 +52,7 @@ namespace FW4
             {
                 TableOfContents.TypeMap type = new TableOfContents.TypeMap()
                 {
-                    Type = (RWObjectType)ReadInt32(stream.ReadBytes(4), false),
+                    Type = (ERWObjectTypes)ReadInt32(stream.ReadBytes(4), false),
                     Index = ReadUInt32(stream.ReadBytes(4), endianess)
                 };
                 TOC.TypeMapEntries.Add(type);
@@ -60,22 +60,17 @@ namespace FW4
             return TOC;
         }
 
-        public static D3DBaseTexture DeserializeD3DBaseTexture(BinaryReader stream, bool endianess)
-        {
-          
-        }
-
-        public static void SerializePegasusObject(BinaryWriter stream, bool endianess, PegasusObject POBJ)
+        public static void SerializePegasusObject(BinaryWriter stream, bool endianess, IRWObject POBJ)
         {
             switch(POBJ.type)
             {
-                case RWObjectTypes.RWOBJECTTYPE_VERSIONDATA:
+                case ERWObjectTypes.RWOBJECTTYPE_VERSIONDATA:
                     VersionData vdata = (VersionData)POBJ;
                     stream.Write(UIntToBytes(vdata.version, endianess));
                     stream.Write(UIntToBytes(vdata.revision, endianess));
                     break;
               
-                case RWObjectTypes.RWOBJECTTYPE_TABLEOFCONTENTS:
+                case ERWObjectTypes.RWOBJECTTYPE_TABLEOFCONTENTS:
                     TableOfContents TOC = (TableOfContents)POBJ;
                     long initPos = stream.BaseStream.Position;
                     stream.Write(UIntToBytes(TOC.m_uiItemsCount, endianess));
@@ -88,16 +83,16 @@ namespace FW4
                     foreach(TableOfContents.TOCEntry entry in TOC.TableEntries)
                     {
                         stream.Write(UIntToBytes(entry.m_Name, endianess));
-                        stream.Write(UIntToBytes(entry.unknown, endianess));
+                        stream.Write(IntToBytes(entry.unknown, endianess));
                         stream.Write(Int64ToBytes(entry.m_uiGuid, endianess));
-                        stream.Write(Int32ToBytes((int)entry.m_Type);
+                        stream.Write(IntToBytes((int)entry.m_Type, endianess));
                         stream.Write(UIntToBytes(entry.m_pObject, endianess));
                     }
                     for(int i = 0; i < (TOC.m_pTypeMap+initPos)-stream.BaseStream.Position; i++)
                       stream.Write((byte)0x00);
                     foreach(TableOfContents.TypeMap type in TOC.TypeMapEntries)
                     {
-                        stream.Write(Int32ToBytes((int)type.Type, endianess));
+                        stream.Write(IntToBytes((int)type.Type, endianess));
                         stream.Write(UIntToBytes(type.Index, endianess));
                     }
                     break;

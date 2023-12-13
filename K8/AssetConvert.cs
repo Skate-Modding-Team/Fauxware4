@@ -1,8 +1,8 @@
 using FW4;
-using FW4.pegasus;
-using FW4.rw;
-using FW4.rw.core;
-using FW4.rw.core.arena;
+using FW4.Pegasus;
+using FW4.RW;
+using FW4.RW.Core;
+using FW4.RW.Core.Arena;
 using System.Collections;
 using static FW4.ArenaSerialize;
 
@@ -11,56 +11,56 @@ namespace K8
   public static class AssetConvert
   {
     /**
-     * <summary>Converts a presentation stream arena file to the version and platform specified.</summary>
+     * <summary>Converts a presentation stream Arena file to the version and platform specified.</summary>
      */
-    public static void ConvertPresArenaFile(string arenaPath, VersionData versData, Platform platform)
+    public static void ConvertPresArenaFile(string ArenaPath, VersionData versData, Platform platform)
     {
-      //get arena from file
-      Arena arena = DeserializeArenaFile(arenaPath);
+      //get Arena from file
+      Arena Arena = DeserializeArenaFile(ArenaPath);
       //convert resource info in header
-      Platform srcplatform = (Platform)BitConverter.ToInt32(arena.fileHeader.magicNumber.body);
+      Platform srcplatform = (Platform)BitConverter.ToInt32(Arena.fileHeader.magicNumber.body);
       if(srcplatform != platform)
       {
         switch(platform)
         {
           case Platform.XB2:
-            arena.m_resource = new TargetResource();
+            Arena.m_resource = new TargetResource();
             break;
         }
       }
       //change platform bytes in header
-      Arena.ArenaFileHeader newHead = arena.fileHeader;
-      Arena.ArenaFileHeaderMagicNumber newMagic = arena.fileHeader.magicNumber;
+      Arena.ArenaFileHeader newHead = Arena.fileHeader;
+      Arena.ArenaFileHeaderMagicNumber newMagic = Arena.fileHeader.magicNumber;
             newMagic.body = BitConverter.GetBytes((int)Platform.XB2);
             newHead.magicNumber = newMagic;
-            arena.fileHeader = newHead;
+            Arena.fileHeader = newHead;
       //change the version data object
-      VersionData srcversData = (VersionData)arena.ArenaEntries[0];
-      arena.ArenaEntries[0] = versData;
-      //remove non-Presentation objects from arena and convert each pres object
+      VersionData srcversData = (VersionData)Arena.ArenaEntries[0];
+      Arena.ArenaEntries[0] = versData;
+      //remove non-Presentation objects from Arena and convert each pres object
       ArrayList entries = new ArrayList();
-      ArrayList dictEntries = new ArrayList();
+      List<Arena.ArenaDictEntry> dictEntries = new List<Arena.ArenaDictEntry>();
       
-      for(int i = 0; i < arena.DictEntries.Count; i++)
+      for(int i = 0; i < Arena.DictEntries.Count; i++)
       {
-        Arena.ArenaDictEntry entry = (Arena.ArenaDictEntry)arena.DictEntries[i];
+        Arena.ArenaDictEntry entry = (Arena.ArenaDictEntry)Arena.DictEntries[i];
         switch (entry.type)
         {
-          case RWObjectTypes.RWGOBJECTTYPE_VERTEXDESCRIPTOR:
+          case ERWObjectTypes.RWGOBJECTTYPE_VERTEXDESCRIPTOR:
             if(platform == Platform.XB2)
             {
-              FW4.Xenon.VertexDeclaration vdecl = new FW4.Xenon.VertexDeclaration();
+              FW4.RenderEngine.Xenon.VertexDeclaration vdecl = new FW4.RenderEngine.Xenon.VertexDeclaration();
               
             }
             break;
         }
       }
 
-      arena.DictEntries = dictEntries;
-      arena.ArenaEntries = entries;
+      Arena.DictEntries = dictEntries;
+      Arena.ArenaEntries = entries;
 
-      //serialize arena to file
-      SerializeArena(arena, arenaPath + "\\converted\\");
+      //serialize Arena to file
+      SerializeArena(Arena, ArenaPath + "\\converted\\");
     }
   }
 }

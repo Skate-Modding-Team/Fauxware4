@@ -1,4 +1,4 @@
-namespace FW4.renderengine.Xenon
+namespace FW4.RenderEngine.Xenon
 {
     public class GPUTEXTURE_FETCH_CONSTANT //TODO: ACTUALLY WRITE ME AND YEAH :)
     {

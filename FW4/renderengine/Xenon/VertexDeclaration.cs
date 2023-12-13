@@ -1,6 +1,6 @@
 using System;
 
-namespace FW4.renderengine.Xenon
+namespace FW4.RenderEngine.Xenon
 {
     public class VertexDeclaration
     {
@@ -10,6 +10,6 @@ namespace FW4.renderengine.Xenon
       ushort refCount;
       ushort instanceStreams;
       ushort pad0;
-      //renderengine::VertexDescriptor::Element m_elements[1];
+      //RenderEngine::VertexDescriptor::Element m_elements[1];
     }
 }

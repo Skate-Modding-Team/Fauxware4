@@ -1,8 +1,8 @@
 using System;
 
-namespace FW4.renderengine.Xenon
+namespace FW4.RenderEngine.Xenon
 {
-    public class D3DResource : FW4.pegasus.PegasusObject
+    public class D3DResource : FW4.RW.Core.IRWObject
     {
       public uint Common;
       public uint ReferenceCount;

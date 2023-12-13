@@ -5,24 +5,27 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using FW4.rw;
+using FW4.RW;
 
-namespace FW4.rw.core.arena
+namespace FW4.RW.Core.Arena
 {
+    /*
+     * <summary>The RenderWare arena file is a container for serialized objects, and is used for storing the main data for the game.</summary>
+     */
     public class Arena
     {
 
         //HEADER
-        public struct ArenaFileHeaderMagicNumber
+        private struct ArenaFileHeaderMagicNumber
         {
-            public byte[] prefix { get; set; }
-            public byte[] body { get; set; }
-            public byte[] suffix { get; set; }
+            private readonly static byte[] prefix = { 0x89, 0x52, 0x57, 0x34 }; //%RW4
+            private EPlatform body { get; set; }
+            private readonly static byte[] suffix = { 0x0D, 0x0A, 0x1A, 0x0A };
         }
 
         public struct ArenaFileHeader
         {
-            public ArenaFileHeaderMagicNumber magicNumber { get; set; }
+            private ArenaFileHeaderMagicNumber magicNumber { get; }
             public bool isBigEndian { get; set; }
             public byte pointerSizeInBits { get; set; }
             public byte pointerAlignment { get; set; }
@@ -39,7 +42,7 @@ namespace FW4.rw.core.arena
             public uint size { get; set; }
             public uint align { get; set; }
             public uint typeIndex { get; set; }
-            public RWObjectTypes type { get; set; }
+            public ERWObjectTypes type { get; set; }
         };
 
         public ArenaFileHeader fileHeader { get; set; }
@@ -56,7 +59,7 @@ namespace FW4.rw.core.arena
         public ResourceDescriptor m_resourceDescriptor { get; set; }
         public ResourceDescriptor m_resourcesUsed { get; set; }
         public TargetResource m_resource { get; set; }
-        public uint m_arenaGroup { get; set; }
+        public uint m_ArenaGroup { get; set; }
 
         //SECTIONS
         public ArenaSectionManifest Manifest { get; set; }

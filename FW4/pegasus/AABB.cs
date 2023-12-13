@@ -1,6 +1,6 @@
 using System.Numerics;
 
-namespace FW4.pegasus
+namespace FW4.Pegasus
 {
   public class AABB
   {

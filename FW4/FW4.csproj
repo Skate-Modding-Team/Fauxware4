@@ -4,12 +4,15 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="pegasus\v24\" />
-    <Folder Include="pegasus\v25\" />
+    <Compile Remove="Pegasus\v25\**" />
+    <EmbeddedResource Remove="Pegasus\v25\**" />
+    <None Remove="Pegasus\v25\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="rw\math\vpu\" />
   </ItemGroup>
 

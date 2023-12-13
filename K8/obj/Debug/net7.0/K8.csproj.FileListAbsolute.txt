@@ -3,3 +3,13 @@ F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.GeneratedMSBuildEditorConfi
 F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.AssemblyInfoInputs.cache
 F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.AssemblyInfo.cs
 F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.csproj.CoreCompileInputs.cache
+F:\SkateModdingTeam\Fauxware4\K8\bin\Debug\net7.0\K8.deps.json
+F:\SkateModdingTeam\Fauxware4\K8\bin\Debug\net7.0\K8.dll
+F:\SkateModdingTeam\Fauxware4\K8\bin\Debug\net7.0\K8.pdb
+F:\SkateModdingTeam\Fauxware4\K8\bin\Debug\net7.0\FW4.dll
+F:\SkateModdingTeam\Fauxware4\K8\bin\Debug\net7.0\FW4.pdb
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.csproj.CopyComplete
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.dll
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\refint\K8.dll
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\K8.pdb
+F:\SkateModdingTeam\Fauxware4\K8\obj\Debug\net7.0\ref\K8.dll

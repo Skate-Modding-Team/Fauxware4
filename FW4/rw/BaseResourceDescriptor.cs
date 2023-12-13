@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FW4.rw
+namespace FW4.RW
 {
     public class BaseResourceDescriptor
     {

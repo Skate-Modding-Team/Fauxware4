@@ -1,8 +1,9 @@
-﻿namespace FW4.rw.core.arena
+﻿namespace FW4.RW.Core.Arena
 {
+
     public class ArenaSection
     {
-        public RWObjectTypes SectionType { get; set; }
+        public ERWObjectTypes SectionType { get; set; }
         public uint NumEntries { get; set; }
     }
 }

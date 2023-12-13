@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Pegasus\**" />
+    <Compile Remove="rw\**" />
+    <EmbeddedResource Remove="Pegasus\**" />
+    <EmbeddedResource Remove="rw\**" />
+    <None Remove="Pegasus\**" />
+    <None Remove="rw\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FW4\FW4.csproj" />
+  </ItemGroup>
+
+</Project>
